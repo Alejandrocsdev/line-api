@@ -1,5 +1,5 @@
-const lineController = require('./line')
+// const messagingApiController = require('./line/messagingApi')
 
-module.exports = {
-  lineController
-}
+// module.exports = {
+//   messagingApiController
+// }

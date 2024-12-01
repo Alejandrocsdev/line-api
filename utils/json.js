@@ -5,7 +5,7 @@ const jsonOptions = {
   //   }
   // }
   verify: (req, res, buf) => {
-    if (req.originalUrl === '/api/line/callback') {
+    if (req.originalUrl === '/api/line/messaging/webhook') {
       req.rawBody = buf.toString()
     }
   }
