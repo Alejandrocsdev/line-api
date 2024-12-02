@@ -1,8 +1,6 @@
 const frontUrl = require('./url')
 
-const allowedOrigins = [
-  frontUrl
-]
+const allowedOrigins = [frontUrl]
 
 const corsOptions = {
   origin: (origin, callback) => {

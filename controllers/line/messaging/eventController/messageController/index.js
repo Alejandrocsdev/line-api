@@ -25,12 +25,41 @@ class MessageController extends Line {
       })
     }
 
-    const bannedWords = ['幹', '靠', '操']
+    const richMenuAction = matchedWord => {
+      const images = {
+        '線上訂位/查看菜單':
+          'https://res.cloudinary.com/dprwe2o80/image/upload/v1733123143/%E6%9F%A5%E7%9C%8B%E8%8F%9C%E5%96%AE_iyz79q.jpg',
+        開啟會員卡:
+          'https://res.cloudinary.com/dprwe2o80/image/upload/v1733123201/%E6%9C%83%E5%93%A1%E4%B8%AD%E5%BF%83_jpqupb.jpg',
+        常見問題: 'https://res.cloudinary.com/dprwe2o80/image/upload/v1733123142/%E6%9C%83%E5%93%A1%E5%8D%A1_qmugqp.jpg'
+      }
+      const imageUrl = images[matchedWord]
+      if (!imageUrl) {
+        return Promise.resolve(null)
+      }
 
+      const imageMessage = {
+        type: 'image',
+        originalContentUrl: imageUrl,
+        previewImageUrl: imageUrl
+      }
+
+      return this.newClient.replyMessage({
+        replyToken: event.replyToken,
+        messages: [imageMessage]
+      })
+    }
+
+    const bannedWords = ['白癡', '傻瓜', '笨蛋']
     const containsBannedWord = bannedWords.some(word => inputText.includes(word))
+    const richMenuWords = ['線上訂位/查看菜單', '開啟會員卡', '常見問題']
+    const matchedRichMenuWord = richMenuWords.some(word => inputText.includes(word))
 
     if (containsBannedWord) {
       return insultAction()
+    }
+    if (matchedRichMenuWord) {
+      return richMenuAction(inputText)
     }
 
     return echoAction()

@@ -1,9 +1,19 @@
 const { BaseError } = require('sequelize')
 const CustomError = require('../errors/CustomError')
+const lineError = require('../errors/lineError')
 
 // 全域錯誤中間件
+// eslint-disable-next-line no-unused-vars
 function globalError(err, req, res, next) {
   console.error(err)
+
+  const { isLineError } = lineError(err)
+
+  // 處理 Line 錯誤
+  if (isLineError) {
+    const { name, message, code } = lineError(err)
+    return res.status(code).json({ type: `LINE API 錯誤(${name})`, message })
+  }
 
   // 處理 Sequelize 錯誤
   if (err instanceof BaseError) {
@@ -21,7 +31,7 @@ function globalError(err, req, res, next) {
     } else {
       type = '未知錯誤'
     }
-    
+
     return res.status(err.code).json({ type, message: err.message })
   }
 
@@ -30,16 +40,3 @@ function globalError(err, req, res, next) {
 }
 
 module.exports = globalError
-
-// AggregateError
-// AssociationError
-// BulkRecordError
-// ConnectionError
-// DatabaseError
-// EagerLoadingError
-// EmptyResultError
-// InstanceError
-// OptimisticLockError
-// QueryError
-// SequelizeScopeError
-// ValidationError

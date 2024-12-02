@@ -1,9 +1,9 @@
 const { Router } = require('express')
 const router = Router()
 
-// const richMenuRoutes = require('./richMenu')
+const richMenuRoutes = require('./richMenu')
 
-// router.use('/richMenu', richMenuRoutes)
+router.use('/rich-menu', richMenuRoutes)
 
 const { line } = require('../../../config/line')
 

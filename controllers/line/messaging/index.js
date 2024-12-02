@@ -4,7 +4,6 @@ const { asyncError } = require('../../../middlewares')
 const eventDispatcher = require('./eventDispatcher')
 
 const webhookHandler = asyncError(async (req, res) => {
-  console.log('req.body.events', req.body.events)
   const results = await Promise.all(req.body.events.map(eventDispatcher))
   results.forEach((result, index) => console.info(`result[${index}]`, result))
   res.status(200).json('OK')

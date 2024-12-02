@@ -5,7 +5,8 @@ const ngrok = require('ngrok')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 
-const { corsOptions, jsonOptions } = require('./utils')
+// const { corsOptions, jsonOptions } = require('./utils')
+const { jsonOptions } = require('./utils')
 const { defaultRoute, globalError } = require('./middlewares')
 const routes = require('./routes')
 
